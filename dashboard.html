@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weight Control</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="js/xlsx.full.min.js"></script>
+        <script>
+            // ฟังก์ชันสำหรับอัปเดตวันที่และเวลา
+            function updateDateTime() {
+                const now = new Date(); // วันที่และเวลาปัจจุบัน
+                const options = { year: '2-digit', month: '2-digit', day: '2-digit' }; // รูปแบบวันที่
+                const formattedDate = now.toLocaleDateString('en-GB', options); // แปลงวันที่
+                const formattedTime = now.toLocaleTimeString('en-GB'); // แปลงเวลา
+                // อัปเดตข้อความใน <p> ของ Sidebar
+                document.getElementById('current-date-time').textContent = `${formattedDate} | ${formattedTime}`;
+            }
+            // เรียกฟังก์ชันอัปเดตทุกวินาที
+            setInterval(updateDateTime, 1000);
+            
+            document.getElementById("excelFile").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: "array" });
+
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
+
+                    const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+                    document.getElementById("output").innerHTML =
+                        "<pre>" + JSON.stringify(jsonData, null, 2) + "</pre>";
+                };
+
+                reader.readAsArrayBuffer(file);
+            }
+        });
+        </script>
+    </head>
+    <body>
+        <!-- ส่วนหลักของเว็บ -->
+        <div class="container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h1>Weight</h1>
+                <!-- วันที่และเวลาจะถูกอัปเดตที่นี่ -->
+                <p id="current-date-time">Loading...</p>
+                <div class="avatar-group">
+                    <div class="avatar"></div>
+                    <div class="avatar"></div>
+                    <div class="avatar"></div>
+                    <div class="avatar"></div>
+                </div>
+                <div class="code-id-form">
+                    <label for="codeInput">CODE ID :</label>
+                    <input type="text" id="codeId" name="codeId" readonly>
+                </div>
+                <div class="line-packing">
+                    <h3>LINE Packing</h3>
+                    <label><input type="radio" name="line"> TRIM</label>
+                    <label><input type="radio" name="line"> SMALL TRIM</label>
+                    <label><input type="radio" name="line"> PBP</label>
+                    <label><input type="radio" name="line"> SMALL PANAL</label>
+                    <label><input type="radio" name="line"> CH</label>
+                    <label><input type="radio" name="line"> OTHER</label>
+                </div>
+                <div class="control-buttons">
+                    <h3>CONTROL</h3>
+                    <div class="button-container">
+                        <!-- ปุ่ม 3 ตัวแรกชิดซ้าย -->
+                        <div class="left-buttons">
+                            <button>New</button>
+                            <button>Login</button>
+                            <button>Add User</button>
+                        </div>
+                        <!-- ปุ่ม 3 ตัวกลาง -->
+                        <div class="center-buttons">
+                            <button>Update</button>
+                            <button>Clear</button>
+                            <button>Report</button>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h2>Upload Excel File</h2>
+                    <input type="file" id="excelFile" />
+                    <div id="output"></div>
+                </div>
+            </div>
+            <!-- ส่วน Action และตารางข้อมูล -->
+            <div class="main-content">
+                <div class="action-section">
+                    <div class="action-circles">
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="circle"></div>
+                        <div class="action-text">Action</div>
+                    </div>
+                    <div class="part-no">
+                        <label for="partNoInput">Part No :</label>
+                        <input type="text" id="partNoInput" placeholder="Enter Part No." />
+                    </div>
+                </div>
+                <div class="part-action">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="Part-action1">Part No :</label>
+                            <input type="text" id="Part-action1" placeholder="Enter Part No." />
+                        </div>
+                        <div class="form-group">
+                            <label for="Part-action2">Control No :</label>
+                            <input type="text" id="Part-action2" placeholder="Enter Control No." />
+                        </div>
+                        <div class="form-group">
+                            <label for="Part-action3">Part Q'TY :</label>
+                            <input type="text" id="Part-action3" placeholder="Enter Q'TY" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Part-action4">By Piece:</label>
+                            <input type="text" id="Part-action4" placeholder="Enter Part Name" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Part-action5">Part Name :</label>
+                            <input type="text" id="Part-action5" placeholder="Enter Part Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="Part-action6">Model :</label>
+                            <input type="text" id="Part-action6" placeholder="Enter Model" />
+                        </div>
+                        <div class="form-group">
+                            <label>100% :</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="hundredPercent"> Yes</label>
+                                <label><input type="radio" name="hundredPercent"> No</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Part-action7">Percent :</label>
+                            <input type="text" id="Part-action7" placeholder="Enter Percent" readonly>
+                            <input type="text" id="Part-action8" placeholder="Enter Percent" readonly>
+                        </div>
+                    </div>
+                    <div class="main-container">
+                        <!-- ส่วนที่ 1: Detail Part -->
+                        <div class="table-container">
+                            <h3 class="section-header">Detail Part</h3>
+                            <select class="listbox" size="9" id="listbox">
+                                <option disabled selected>No.  | D/C Part No. | Model | Control | Total </option>
+                                <option data-id="1">1234 | 987654321012345 | ABC123 | Control1 | 1000</option>
+                                <option data-id="2">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                                <option data-id="3">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                                <option data-id="4">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                                <option data-id="5">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                                <option data-id="6">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                                <option data-id="7">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                                <option data-id="8">5678 | 123456789012345 | XYZ456 | Control2 | 2000</option>
+                            </select>
+                            <div id="actions">
+                                <!-- ปุ่มจะถูกแสดงหลังจากเลือกรายการ -->
+                                <button id="edit-btn" style="display: none;" onclick="editFunction()">Edit</button>
+                                <button id="delete-btn" style="display: none;" onclick="deleteFunction()">Delete</button>
+                            </div>
+                        </div>
+                        <!-- ส่วนที่ 2: Check Weight -->
+                        <div class="check-weight-section">
+                            <h3 class="section-header">Weight</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Standard</th>
+                                        <th>Lower</th>
+                                        <th>Upper</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="standard-weight">AUTO</td>
+                                        <td id="standard-Lower">AUTO</td>
+                                        <td id="standard-Upper">AUTO</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>            
+                </div>    
+                <div class="container">
+                    <div class="Detail-Weight-Box green-box">
+                        <h3 class="section-header">Detail Wight (Box)</h3>
+                        <div class="input-container">
+                            <div>
+                                <input type="text" class="box-input" placeholder="BOX1" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX2" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX3" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX4" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX5" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input" placeholder="BOX6" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX7" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX8" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX9" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX10" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input" placeholder="BOX11" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX12" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX13" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX14" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX15" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input" placeholder="BOX16" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX17" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX18" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX19" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX20" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input" placeholder="BOX21" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX22" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX23" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX24" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX25" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input" placeholder="BOX26" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX27" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX28" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX29" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input" placeholder="BOX30" oninput="calculateAverage()"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Detail-Weight-Part yellow-box">
+                        <h3 class="section-header">Detail Weight (Part)</h3>
+                        <div class="input-container">
+                            <div>
+                                <input type="text" class="box-input1" placeholder="BOX1" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX2" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX3" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX4" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX5" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input1" placeholder="BOX6" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX7" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX8" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX9" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX10" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input1" placeholder="BOX11" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX12" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX13" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX14" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX15" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input1" placeholder="BOX16" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX17" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX18" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX19" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX20" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input1" placeholder="BOX21" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX22" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX23" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX24" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX25" oninput="calculateAverage()"/>
+                            </div>
+                            <div>
+                                <input type="text" class="box-input1" placeholder="BOX26" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX27" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX28" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX29" oninput="calculateAverage()"/>
+                                <input type="text" class="box-input1" placeholder="BOX30" oninput="calculateAverage()"/>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="Detail-Material blue-box">
+                        <h3 class="section-header">Detail Material (BOX)</h3>
+                        <div class="input-container">
+                            <!-- กรอบสี่เหลี่ยม -->
+                            <div class="scrollable-box">
+                                <select id="materialList" class="list-box" onchange="handleMaterialSelection()" size="13">
+                                    <option value="Material1">Material 1</option>
+                                    <option value="Material2">Material 2</option>
+                                    <option value="Material3">Material 3</option>
+                                    <option value="Material4">Material 4</option>
+                                    <option value="Material5">Material 5</option>
+                                    <option value="Material6">Material 6</option>
+                                    <option value="Material7">Material 7</option>
+                                    <option value="Material8">Material 8</option>
+                                    <option value="Material9">Material 9</option>
+                                    <option value="Material10">Material 10</option>
+                                    <option value="Material11">Material 11</option>
+                                    <option value="Material12">Material 12</option>
+                                    <option value="Material13">Material 13</option>
+                                    <option value="Material14">Material 14</option>
+                                    <option value="Material15">Material 15</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div class="logout-container">
+                <a href="bin/login-page/Login.html" id="logoutLink" onclick="return confirm('Are you sure you want to log out?')" style="text-decoration: none;">
+                    <button id="logoutButton">Logout</button>
+                </a>
+            </div>
+            </div>                
+        </div>
+        <!-- <script src="Dashboard.js"></script> -->
+        <script src="app.js"></script>
+    </body>
+    <footer>
+        <p>&copy; 2025 SYSTEM Rev.1 All Rights Reserved.</p>
+    </footer>
+</html>
