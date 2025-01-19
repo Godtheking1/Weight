@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="Register.css">
+</head>
+<body>
+    <div class="register-form">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <!-- Username -->
+            <label for="newUsername">New Username:</label>
+            <input type="text" id="newUsername" name="newUsername" required>
+            
+            <!-- Password -->
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+            
+            <!-- Confirm Password -->
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <!-- Submit Button -->
+            <button type="submit">Register</button>
+            
+            <p class="error-message" id="errorMessage"></p>
+        </form>
+        <button type="button" onclick="goBack()">Back to Login</button>
+        <div class="checkbox-container">
+            <input type="checkbox" id="lengthCheckbox">
+            <div class="custom-checkbox"></div>
+            <label for="lengthCheckbox" class="checkbox-label">รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัว</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="uppercaseCheckbox">
+            <div class="custom-checkbox"></div>
+            <label for="uppercaseCheckbox" class="checkbox-label">อักษรพิมพ์ใหญ่ 1 ตัว</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="lowercaseCheckbox">
+            <div class="custom-checkbox"></div>
+            <label for="lowercaseCheckbox" class="checkbox-label">อักษรพิมพ์เล็ก 1 ตัว</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="numberCheckbox">
+            <div class="custom-checkbox"></div>
+            <label for="numberCheckbox" class="checkbox-label">อักษรตัวเลข 1 ตัว</label>
+        </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="specialCharCheckbox">
+            <div class="custom-checkbox"></div>
+            <label for="specialCharCheckbox" class="checkbox-label">อักษรพิเศษ 1 ตัว</label>
+        </div>
+    </div>
+
+    <script src="Register.js"></script>
+<footer>
+    <p>&copy; 2025 SYSTEM Rev.1 All Rights Reserved.</p>
+</footer>
+</html>

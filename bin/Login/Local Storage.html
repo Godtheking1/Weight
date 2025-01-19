@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button onclick="login()">Login</button>
+        <p id="loginMessage" class="message"></p>
+    </div>
+
+    <script>
+        // ฟังก์ชันสำหรับการเข้าสู่ระบบ
+        function login() {
+            let keyUser = document.getElementById('loginUsername').value;  // Key User ที่กรอกในฟอร์มล็อกอิน
+            let enteredPassword = document.getElementById('loginPassword').value;  // รหัสผ่านที่กรอกในฟอร์ม
+
+            // ดึงรหัสจาก Local Storage ตาม Key User
+            let storedPassword = localStorage.getItem(keyUser); 
+
+            // ตรวจสอบรหัสที่กรอกกับรหัสที่เก็บไว้ใน Local Storage
+            if (storedPassword === enteredPassword) {
+                alert("Login successful!");
+                // นำทางไปยังหน้าหลัก
+                window.location.href = "home.html";  // เปลี่ยนตามที่ต้องการ
+            } else {
+                alert("Invalid username or password.");
+                document.getElementById('loginMessage').textContent = "Incorrect username or password.";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+    <div class="login-form">
+        <h2>ยินดีต้อนรับ!</h2>
+        <form id="loginForm">
+            <!-- Username -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <!-- Password -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required> 
+
+            <!-- Login Button -->
+            <button type="submit">Login</button>
+            
+            <!-- Error Message -->
+            <p class="error-message" id="errorMessage"></p>
+        </form>
+        
+        <!-- Additional Options -->
+        <div class="additional-options">
+            <a href="#" id="forgotPassword">Forgot Password?</a>
+            <button id="registerButton" onclick="registerRedirect()">Register</button>
+        </div>
+    </div>
+
+    <script src="Login.js"></script>
+</body>
+<footer>
+    <p>&copy; 2025 SYSTEM Rev.1 All Rights Reserved.</p>
+</footer>
+</html>
