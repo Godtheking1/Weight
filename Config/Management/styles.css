@@ -1,0 +1,331 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+button {
+    background-color: #007BFF;
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.collapsible-content {
+    display: block; 
+}
+
+h2 {
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    user-select: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+header button {
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+header button:hover {
+    background-color: #218838;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin: 20px 0;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+}
+
+.table thead {
+    background-color: #007BFF;
+    color: white;
+}
+
+th, tr {
+    font-size: 14px;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    gap: 10px;
+    text-align: center;
+}
+
+table th, table tr {
+    padding: 8px 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Actions Buttons */
+.actions button {
+    border: none;
+    border-radius: 12px;
+    padding: 5px 15px;
+    margin: 1px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+.actions .edit {
+    background-color: #ffc107;
+    color: white;
+}
+
+.actions .edit:hover {
+    background-color: #e0a800;
+}
+
+.actions .delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.actions .delete:hover {
+    background-color: #c82333;
+}
+
+.actions .icon {
+    margin-right: 5px;
+}
+
+#usersPerPageOptions {
+    position: fixed;
+    bottom: 20px;  
+    left: 20px;   
+    display: flex;
+    justify-content: center; 
+    gap: 10px;  
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.option {
+    cursor: pointer;
+    padding: 5px ;
+    text-align: center;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.option:hover {
+    background-color: #1ddae7;
+}
+
+.page-info-container {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-selector {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.page-button {
+    cursor: pointer;
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.page-button:hover {
+    background-color: #1ddae7;
+}
+
+.modal {
+    display: none;
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.4); 
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+
+    padding: 20px;
+    border: 1px solid #888;
+    width: 25%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    margin: 150px auto;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.modal-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.btn-submit {
+    width: 100%;
+    margin-left: 0;
+    padding: 15px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+}
+
+.toast.show {
+    display: block;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 20px;
+    }
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* สีเทาอ่อน */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* สีขาว */
+}

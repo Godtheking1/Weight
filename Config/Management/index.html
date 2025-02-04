@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+</head>
+<body>
+
+<header>
+    <button onclick="goHome()">
+        <i class="fas fa-home"></i> Home
+    </button>
+    <h1>User Management</h1>
+    <!-- ปุ่ม Add User -->
+    <button onclick="openModal(false)">New User</button>
+</header>
+
+<h2 onclick="toggleSection('adminSection', this)">⬇️ User Group Name: Admin</h2>
+<div id="adminSection" class="collapsible-content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th>User Type</th>
+                <th>Start Date</th>
+                <th>Updated Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="adminTableBody">
+            <!-- ข้อมูล Admin -->
+        </tbody>
+    </table>
+</div>
+<h2 onclick="toggleSection('userSection', this)">⬇️ User Group Name: Users</h2>
+<div id="userSection" class="collapsible-content">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Password</th>
+                <th>User Type</th>
+                <th>Start Date</th>
+                <th>Updated Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- ข้อมูล User -->
+        </tbody>
+    </table>
+</div>
+<div id="usersPerPageOptions">
+    <div class="option" onclick="changeUsersPerPage(20)">20</div>
+    <div class="option" onclick="changeUsersPerPage(30)">30</div>
+    <div class="option" onclick="changeUsersPerPage(50)">50</div>
+</div>
+
+<!-- Pagination -->
+<div id="pagination"></div>
+
+<!-- แสดงหน้าปัจจุบัน -->
+<div id="currentPage"></div>
+
+<div class="page-info-container">
+    <span id="pageInfo"></span> <!-- ข้อมูลหน้า -->
+    <div id="pageSelector" class="page-selector"></div> <!-- ตัวเลือกหน้า -->
+</div>
+
+<!-- Modal สำหรับ Add User -->
+<div id="addUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">New User</h2>
+        <form id="addUserForm">
+
+        <!-- Form สำหรับการเพิ่มผู้ใช้ -->
+        <form id="addUserForm">
+            <div class="input-group">
+                <label for="newUsername">Username</label>
+                <input type="text" id="newUsername" placeholder="Enter Username" oninput="checkUsername()" required>
+                <span id="usernameError" class="error-message"></span>
+            </div>
+            <div class="input-group">
+                <label for="newName">Name</label>
+                <input type="text" id="newName" placeholder="Enter Full Name" required>
+                <span id="nameError" class="error-message"></span>
+            </div>
+            <div class="input-group">
+                <label for="newPassword">Password</label>
+                <input type="password" id="newPassword" placeholder="Enter Password" required>
+                <span id="passwordError" class="error-message"></span>
+            </div>
+            <div class="input-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <span id="confirmPasswordError" class="error-message"></span>
+            </div>
+            <div class="input-group">
+                <label for="newUserType">User Type</label>
+                <select id="newUserType">
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+                <span id="userTypeError" class="error-message"></span>
+            </div>
+            <button type="button" onclick="addUser()" class="btn-submit">New User</button>
+        </form>
+               
+    </div>
+</div>
+
+<!-- Modal สำหรับ Edit User -->
+<div id="editUserModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Edit User</h2>
+        <form id="editUserForm">
+
+        <!-- Form สำหรับการแก้ไขผู้ใช้ -->
+        <form id="editUserForm">
+            <div class="input-group">
+                <label for="editUsername">Username</label>
+                <input type="text" id="editUsername" placeholder="Enter Username" disabled>
+            </div>
+            <div class="input-group">
+                <label for="editName">Name</label>
+                <input type="text" id="editName" placeholder="Enter Full Name" required>
+            </div>
+            <div class="input-group">
+                <label for="editPassword">Password</label>
+                <input type="password" id="editPassword" placeholder="New Password" required>
+            </div>
+            <div class="input-group">
+                <label for="editUserType">User Type</label>
+                <select id="editUserType">
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+            </div>
+            <button type="button" onclick="updateUser()" class="btn-submit">Update User</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast for notifications -->
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
