@@ -1,32 +1,17 @@
-fetch('get_parts.php')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);  // เพิ่มการตรวจสอบข้อมูลที่ได้รับจาก PHP
-        const tableBody = document.getElementById('trim-table-body');
-        const listbox = document.getElementById('listbox');
+const express = require('express');
+const path = require('path');
+const app = express();
 
-        if (data && data.length > 0) {
-            data.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.dc_part_no}</td>
-                    <td>${item.model}</td>
-                    <td>${item.control}</td>
-                    <td>${item.total}</td>
-                `;
-                tableBody.appendChild(row);
+// ให้ Express ให้บริการไฟล์ Static จากโฟลเดอร์ 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
-                const option = document.createElement('option');
-                option.textContent = `${item.id} | ${item.dc_part_no} | ${item.model} | ${item.control} | ${item.total}`;
-                listbox.appendChild(option);
-            });
-        } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="5">No data found</td>';
-            tableBody.appendChild(row);
-        }
-    })
-    .catch(error => {
-        console.error('Error fetching data:', error);
-    });
+// เมื่อเข้าถึง root (/) ให้แสดงไฟล์ dashboard.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
+});
+
+// ตั้งค่าพอร์ตให้ใช้จากตัวแปรแวดล้อม หรือใช้ 10000 เป็นค่าเริ่มต้น
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
