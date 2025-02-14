@@ -239,21 +239,14 @@ function addUser() {
     const userData = { username, name, password, userType };
 
     // ส่งข้อมูลผู้ใช้ใหม่ไปยัง backend (Server)
-    fetch('http://localhost:10000/addUser', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);  // แจ้งให้ผู้ใช้ทราบ
-        loadUsers();  // โหลดข้อมูลใหม่จาก Server
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('ไม่สามารถบันทึกข้อมูลได้');
+    app.use(express.json());  // สำหรับรับ JSON data
+    
+    app.post('/addUser', (req, res) => {
+        const userData = req.body;
+        console.log(userData);  // แสดงข้อมูลที่ได้รับจากฝั่ง client
+    
+        // สามารถทำการบันทึกข้อมูลที่ได้รับ (เช่นบันทึกลงฐานข้อมูล) แล้วส่งผลลัพธ์กลับไปที่ client
+        res.json({ message: 'ข้อมูลถูกบันทึกสำเร็จ' });
     });
 
     // ล้างฟอร์ม
