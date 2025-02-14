@@ -13,5 +13,5 @@ app.get('/', (req, res) => {
 // ตั้งค่าพอร์ตให้ใช้จากตัวแปรแวดล้อม หรือใช้ 10000 เป็นค่าเริ่มต้น
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-    console.log(Server is running on port ${PORT});
+    console.log(`Server is running on port ${PORT}`);
 });
