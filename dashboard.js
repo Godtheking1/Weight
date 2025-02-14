@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ลิงก์ที่ต้องการ
     const addUserLink = '/Config/Management/index.html';
     const queueOrderLink = 'https://docs.google.com/spreadsheets/d/1NbR0RoXXfwNCd9sfzF3qwYRRJtDfbc2z8N7fkMN_3Ro/edit?gid=180982015#gid=180982015';
-    const reportLink = 'https://forms.gle/2i6t6Tjq5FwgSsb28';
+    const reportLink = 'https://docs.google.com/forms/d/e/1FAIpQLSe5Vmyua1NSlQ00NdBsE8ECZXtqJCUVgwIRg16CuZlJ3dy9uQ/viewform';
 
     // เพิ่ม event listener ให้ปุ่ม
     addUserButton.addEventListener('click', function () {
