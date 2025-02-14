@@ -26,7 +26,7 @@ body {
 .container {
     display: flex;
     gap: 20px;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     height: 100vh;
 }
@@ -44,10 +44,18 @@ body {
     border-radius: 8px;
     background-color: #fff5f5; 
     font-family: Arial, sans-serif;
-    height: 280px;
+    height: 307px;
 }
 
 .check-weight-section {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #4caf50; 
+    border-radius: 8px;
+    background-color: #f5fff5; 
+}
+
+.Report-buttons {
     flex: 1;
     padding: 10px;
     border: 2px solid #4caf50; 
@@ -61,10 +69,6 @@ body {
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     text-align: center;
-}
-
-h1 {
-    font-size: 5vw;
 }
 
 .sidebar h1 {
@@ -555,7 +559,7 @@ button {
 }
 
 .section-header {
-    font-size: 1.2em;
+    font-size: 1.0em;
     font-weight: bold;
     text-align: left;
     margin-bottom: 5px;
@@ -576,7 +580,7 @@ button {
     border-radius: 5px; 
     padding: 10px;
     width: 300px; 
-    max-height: 400px; 
+    max-height: 320px; 
     background-color: #f0f8ff; 
 }
 
@@ -680,7 +684,7 @@ footer {
     color: white; 
     text-align: center; 
     font-size: 14px;
-    padding: 10px 0; 
+    padding: 2px 0; 
     width: 100%; 
     position: fixed; 
     bottom: 0; 

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Weight Control</title>
-        <link rel="stylesheet" href="/styles.css">
+        <link rel="stylesheet" href="styles.css">
         <script>
             // ฟังก์ชันสำหรับอัปเดตวันที่และเวลา
             function updateDateTime() {
@@ -157,6 +157,46 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        <div class="Report-section">
+                            <h4 class="section-header">Detail Report</h4>
+                                <div class="scrollable-box">
+                                    <option value="" disabled selected>Line | Queue | D/C Part No. | Status </option>
+                                    <select id="Report" class="list-box" size="4"></select>
+                                    <script>
+                                        async function fetchData() {
+                                            const url = "https://script.google.com/macros/s/AKfycbwIQS6fV6WI4H4kjt0mr8QXLsDq5-vKs4tbqIJFaAb6IVvU5MY2-0YVd3nOurkfBy4p/exec";
+                                            
+                                            try {
+                                                let response = await fetch(url);
+                                                let data = await response.json();
+    
+                                                console.log("Data received:", data); // ✅ Debug JSON ที่ได้
+    
+                                                let listBox = document.getElementById("Report");
+                                                listBox.innerHTML = ""; // ล้างค่าเก่า
+    
+                                                if (Array.isArray(data) && data.length > 0) {
+                                                    data.forEach(item => {
+                                                        let option = document.createElement("option");
+                                                        option.value = item["Queue order"];
+                                                        option.textContent = `${item["Where Line"]} | ${item["Queue order"]} | ${item["Part no."]} | ${item["Status"]}`;
+                                                        listBox.appendChild(option);
+                                                    });
+                                                } else {
+                                                    console.warn("No data found!");
+                                                    let option = document.createElement("option");
+                                                    option.textContent = "No data available";
+                                                    listBox.appendChild(option);
+                                                }
+                                            } catch (error) {
+                                                console.error("Error fetching data:", error);
+                                            }
+                                        }
+    
+                                        fetchData();
+                                    </script>
+                                </div>
+                        </div>
                         </div>
                     </div>            
                 </div>    
@@ -260,8 +300,8 @@
                         <div class="input-container">
                             <!-- กรอบสี่เหลี่ยม -->
                             <div class="scrollable-box">
+                                <option value="" disabled selected>Mat Code | Material | Q'TY </option>
                                 <select id="materialList" class="list-box" onchange="handleMaterialSelection()" size="13">
-                                    <option value="" disabled selected>Mat Code | Material | Q'TY </option>
                                 </select>
                             </div>
                         </div>
