@@ -239,7 +239,7 @@ function addUser() {
     const userData = { username, name, password, userType };
 
     // ส่งข้อมูลผู้ใช้ใหม่ไปยัง backend (Server)
-    fetch('http://localhost:5000/addUser', {
+    fetch('http://localhost:10000/addUser', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
