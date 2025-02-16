@@ -196,6 +196,7 @@
                                     }
                                 
                                     let updatedData = {
+                                        action: "update",  // เพิ่ม action เพื่อระบุการแก้ไข
                                         "D/C Part No.": document.getElementById("Part-action1").value,
                                         "Full Part Name": document.getElementById("Part-action5").value,
                                         "Model": document.getElementById("Part-action6").value,
@@ -205,19 +206,19 @@
                                 
                                     try {
                                         let response = await fetch(apiUrl, {
-                                            method: "PUT",
+                                            method: "POST",  // เปลี่ยนจาก PUT เป็น POST
                                             body: JSON.stringify(updatedData),
                                             headers: { "Content-Type": "application/json" }
                                         });
                                 
                                         let result = await response.json();
                                         alert(result.message);
-                                        fetchDetailPart();
+                                        fetchDetailPart();  // รีโหลดข้อมูล
                                     } catch (error) {
                                         console.error("Error updating data:", error);
                                     }
                                 }
-                                
+
                                 async function deleteFunction() {
                                     if (!selectedData) {
                                         alert("Please select a row to delete!");
