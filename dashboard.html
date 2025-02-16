@@ -132,62 +132,73 @@
                     </div>
                     <div class="main-container">
                         <!-- ส่วนที่ 1: Detail Part -->
-                        <div class="table-container">
+                          <script>
+                            function fetchData() {
+                              google.script.run.withSuccessHandler(displayData).getData();
+                            }
+                        
+                            function displayData(data) {
+                              var listbox = document.getElementById("listbox");
+                              listbox.innerHTML = `<option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total </option>`;
+                        
+                              data.forEach((row, index) => {
+                                var option = document.createElement("option");
+                                option.value = index + 2; // เก็บเลขแถว
+                                option.textContent = `${row[0]} | ${row[1]} | ${row[2]} | ${row[3]} | ${row[4]} | ${row[5]}`;
+                                listbox.appendChild(option);
+                              });
+                            }
+                        
+                            function editFunction() {
+                              var selected = document.getElementById("listbox").value;
+                              if (!selected) {
+                                alert("Please select an item to edit.");
+                                return;
+                              }
+                              
+                              var selectedRow = document.querySelector(`option[value='${selected}']`).textContent.split(" | ");
+                              var newData = prompt("Edit data:", selectedRow.join(" | "));
+                              
+                              if (newData) {
+                                var newValues = newData.split(" | ");
+                                google.script.run.withSuccessHandler(() => {
+                                  alert("Data updated!");
+                                  fetchData();
+                                }).updateData(selected, newValues);
+                              }
+                            }
+                        
+                            function deleteFunction() {
+                              var selected = document.getElementById("listbox").value;
+                              if (!selected) {
+                                alert("Please select an item to delete.");
+                                return;
+                              }
+                        
+                              if (confirm("Are you sure you want to delete this item?")) {
+                                google.script.run.withSuccessHandler(() => {
+                                  alert("Data deleted!");
+                                  fetchData();
+                                }).deleteData(selected);
+                              }
+                            }
+                          </script>
+                        </head>
+                        <body onload="fetchData()">
+                        
+                          <div class="table-container">
                             <h3 class="section-header">Detail Part</h3>
-                            <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total </option>
-                            <select class="listbox" size="9" id="listbox"></select>
-                              <script>
-                                function fetchData() {
-                                  google.script.run.withSuccessHandler(displayData).getData();
-                                }
-                            
-                                function displayData(data) {
-                                  var listbox = document.getElementById("listbox");
-                                  listbox.innerHTML = `<option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total </option>`;
-                            
-                                  data.forEach((row, index) => {
-                                    var option = document.createElement("option");
-                                    option.value = index + 2; // เก็บเลขแถว
-                                    option.textContent = `${row[0]} | ${row[1]} | ${row[2]} | ${row[3]} | ${row[4]} | ${row[5]}`;
-                                    listbox.appendChild(option);
-                                  });
-                                }
-                            
-                                function editFunction() {
-                                  var selected = document.getElementById("listbox").value;
-                                  if (!selected) {
-                                    alert("Please select an item to edit.");
-                                    return;
-                                  }
-                                  
-                                  var selectedRow = document.querySelector(`option[value='${selected}']`).textContent.split(" | ");
-                                  var newData = prompt("Edit data:", selectedRow.join(" | "));
-                                  
-                                  if (newData) {
-                                    var newValues = newData.split(" | ");
-                                    google.script.run.withSuccessHandler(() => {
-                                      alert("Data updated!");
-                                      fetchData();
-                                    }).updateData(selected, newValues);
-                                  }
-                                }
-                            
-                                function deleteFunction() {
-                                  var selected = document.getElementById("listbox").value;
-                                  if (!selected) {
-                                    alert("Please select an item to delete.");
-                                    return;
-                                  }
-                            
-                                  if (confirm("Are you sure you want to delete this item?")) {
-                                    google.script.run.withSuccessHandler(() => {
-                                      alert("Data deleted!");
-                                      fetchData();
-                                    }).deleteData(selected);
-                                  }
-                                }
-                              </script>
-                            <body onload="fetchData()">
+                            <select class="listbox" size="9" id="listbox">
+                              <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total </option>
+                            </select>
+                            <div id="actions">
+                              <button id="edit-btn" onclick="editFunction()">Edit</button>
+                              <button id="delete-btn" onclick="deleteFunction()">Delete</button>
+                            </div>
+                          </div>
+                        
+                        </body>
+                                
                             <div id="actions">
                                 <button id="edit-btn" onclick="editFunction()">Edit</button>
                                 <button id="delete-btn" onclick="deleteFunction()">Delete</button>
