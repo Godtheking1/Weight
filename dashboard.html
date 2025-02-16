@@ -157,6 +157,7 @@
                                   // ฟังก์ชันสำหรับแสดงข้อมูลใน HTML
                                   function displayData(data) {
                                     let listbox = document.getElementById("detailPart");
+                                    listbox.innerHTML = '';  // ล้างหัวบรรทัดออก
                                 
                                     // แสดงข้อมูลใน Listbox
                                     data.forEach((row, index) => {
@@ -204,7 +205,6 @@
                                     fetchDetailReport();  // เรียกใช้ฟังก์ชัน fetchDetailReport
                                   };
                                 </script>
-
                             <div id="actions">
                               <button id="edit-btn" onclick="editFunction()">Edit</button>
                               <button id="delete-btn" onclick="deleteFunction()">Delete</button>
