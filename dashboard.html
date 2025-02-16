@@ -134,15 +134,15 @@
                         <!-- ส่วนที่ 1: Detail Part -->
                           <div class="table-container">
                             <h3 class="section-header">Detail Part</h3>
+                            <option>No. | D/C Part No. | Full Part Name | Model | Control | Total</option>
                             <select id="detailPart" class="listbox" size="9" onchange="populateForm()">
-                                <option value="" disabled selected>No. | D/C Part No. | Full Part Name | Model | Control | Total</option>
                             </select>
                             <div id="actions">
                               <button id="edit-btn" onclick="editFunction()">Edit</button>
                               <button id="delete-btn" onclick="deleteFunction()">Delete</button>
                             </div>
                             <script>
-                                const apiUrl = "https://script.google.com/macros/s/AKfycbx518h0D0w7d35INIOojoaHeFMCaDCBGob-S72hNcUzixOUClooCbXFZBlHYB-urXGQ/exec";
+                                const apiUrl = "https://script.google.com/macros/s/AKfycbzOF1-AF-BUGcrHTJx0FYFNGqjDAEEPfk1HtEsNpaef4P30TQ1sxQKGMf8JjmEXgDwb/exec";
                                 let selectedData = null;
                                 
                                 async function fetchDetailPart() {
@@ -158,7 +158,7 @@
                                 
                                 function displayData(data) {
                                     let listbox = document.getElementById("detailPart");
-                                    listbox.innerHTML = ``;
+                                    // listbox.innerHTML = ``;
                                 
                                     data.forEach(row => {
                                         let option = document.createElement("option");
