@@ -142,7 +142,7 @@
                               <button id="delete-btn" onclick="deleteFunction()">Delete</button>
                             </div>
                             <script>
-                                const apiUrl = "https://script.google.com/macros/s/AKfycbx4jJicSq8XqyjGhdOzUSwF7t7LL1DfATnz4bHxS5ODwCFyQMZN46vBBppmVTg5btPV/exec";
+                                const apiUrl = "https://script.google.com/macros/s/AKfycbx518h0D0w7d35INIOojoaHeFMCaDCBGob-S72hNcUzixOUClooCbXFZBlHYB-urXGQ/exec";
                                 let selectedData = null;
                                 
                                 async function fetchDetailPart() {
@@ -158,7 +158,7 @@
                                 
                                 function displayData(data) {
                                     let listbox = document.getElementById("detailPart");
-                                    listbox.innerHTML = `<option value="" disabled selected>No. | D/C Part No. | Full Part Name | Model | Control | Total</option>`;
+                                    listbox.innerHTML = ``;
                                 
                                     data.forEach(row => {
                                         let option = document.createElement("option");
@@ -196,7 +196,7 @@
                                     }
                                 
                                     let updatedData = {
-                                        action: "update",  // เพิ่ม action เพื่อระบุการแก้ไข
+                                        method: "edit",  // ใช้ "edit" เพื่อให้ Google Apps Script รู้ว่าเป็นการแก้ไข
                                         "D/C Part No.": document.getElementById("Part-action1").value,
                                         "Full Part Name": document.getElementById("Part-action5").value,
                                         "Model": document.getElementById("Part-action6").value,
@@ -206,14 +206,14 @@
                                 
                                     try {
                                         let response = await fetch(apiUrl, {
-                                            method: "POST",  // เปลี่ยนจาก PUT เป็น POST
+                                            method: "POST",  // ใช้ POST แทน PUT
                                             body: JSON.stringify(updatedData),
                                             headers: { "Content-Type": "application/json" }
                                         });
                                 
                                         let result = await response.json();
                                         alert(result.message);
-                                        fetchDetailPart();  // รีโหลดข้อมูล
+                                        fetchDetailPart();  // รีเฟรชข้อมูล
                                     } catch (error) {
                                         console.error("Error updating data:", error);
                                     }
