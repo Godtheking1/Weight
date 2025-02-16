@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // ฟังก์ชันแก้ไข
     function editFunction() {
-        const listbox = document.getElementById("listbox");
+        const listbox = document.getElementById("detailPart");
         const selectedOption = listbox.options[listbox.selectedIndex];
         if (selectedOption) {
             alert("Editing: " + selectedOption.text);
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ฟังก์ชันลบ
     function deleteFunction() {
-        const listbox = document.getElementById("listbox");
+        const listbox = document.getElementById("detailPart");
         const selectedOption = listbox.options[listbox.selectedIndex];
         
         // ป้องกันไม่ให้ลบตัวเลือกแรก
