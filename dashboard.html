@@ -138,29 +138,28 @@
                                 <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>
                             </select>
                               <script>
-                                  function fetchData() {
-                                    fetch("https://script.google.com/macros/s/AKfycbz0X8tkXrsCeMr5uhFqKvwHMbNif5A6YQVNzTvqHP5xo5tSF-xqgFtQqKzg8elU4NlE/exec") // ใส่ URL ที่ได้จาก Deploy
-                                      .then(response => response.json())
-                                      .then(data => displayData(data))
-                                      .catch(error => console.error("Error fetching data:", error));
-                                  }
-                                
-                                  function displayData(data) {
+                                function fetchDetailPart() {
+                                    fetch("https://script.google.com/macros/s/AKfycbz0X8tkXrsCeMr5uhFqKvwHMbNif5A6YQVNzTvqHP5xo5tSF-xqgFtQqKzg8elU4NlE/exec")
+                                        .then(response => response.json())
+                                        .then(data => displayDetailPart(data))
+                                        .catch(error => console.error("Error fetching Detail Part:", error));
+                                }
+                    
+                                function displayDetailPart(data) {
                                     let listbox = document.getElementById("detailPart");
                                     listbox.innerHTML = `<option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>`;
-                                
+                    
                                     data.forEach((row, index) => {
-                                      let option = document.createElement("option");
-                                      option.value = index + 2; // กำหนดค่าเป็นเลขแถว (เริ่มที่แถว 2)
-                                      option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
-                                      listbox.appendChild(option);
+                                        let option = document.createElement("option");
+                                        option.value = index + 2; // กำหนดเลขแถว
+                                        option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
+                                        listbox.appendChild(option);
                                     });
-                                  }
-                                
-                                  // โหลดข้อมูลเมื่อหน้าเว็บเปิด
-                                  window.onload = fetchData;
-                                </script>
-
+                                }
+                    
+                                // โหลดข้อมูลเมื่อหน้าเว็บเปิด
+                                fetchDetailPart();
+                            </script>
 
                             <div id="actions">
                               <button id="edit-btn" onclick="editFunction()">Edit</button>
@@ -192,18 +191,18 @@
                                     <option value="" disabled selected>Line | Queue | D/C Part No. | Status </option>
                                     <select id="Report" class="list-box" size="4"></select>
                                     <script>
-                                        async function fetchData() {
+                                        async function fetchDetailReport() {
                                             const url = "https://script.google.com/macros/s/AKfycbxBbjXRNxqIHLy5POx0jps0KRZ47jJNz7SOTFU0vZ38py-ssNfdVeNX1w99kYtkrK4K/exec";
-                                            
+                        
                                             try {
                                                 let response = await fetch(url);
                                                 let data = await response.json();
-    
-                                                console.log("Data received:", data); // ✅ Debug JSON ที่ได้
-    
+                        
+                                                console.log("Data received for Report:", data);
+                        
                                                 let listBox = document.getElementById("Report");
                                                 listBox.innerHTML = ""; // ล้างค่าเก่า
-    
+                        
                                                 if (Array.isArray(data) && data.length > 0) {
                                                     data.forEach(item => {
                                                         let option = document.createElement("option");
@@ -218,11 +217,11 @@
                                                     listBox.appendChild(option);
                                                 }
                                             } catch (error) {
-                                                console.error("Error fetching data:", error);
+                                                console.error("Error fetching Detail Report:", error);
                                             }
                                         }
-    
-                                        fetchData();
+                        
+                                        fetchDetailReport();
                                     </script>
                                 </div>
                         </div>
