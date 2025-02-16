@@ -140,12 +140,11 @@
                               <script>
                                 function fetchDetailPart() {
                                 fetch("https://script.google.com/macros/s/AKfycbwco74HEGfpB_3XpUpxSywc6_c4RPUH1bXxmptEh8m1ZvOWV6-TTZEjK89pLpU_QXs/exec")
-                                    .then(response => response.text())  // ดึงข้อมูลเป็น text
+                                    .then(response => response.text())  // ดึงข้อมูลเป็น text แทน JSON
                                     .then(text => {
-                                        console.log("Raw response:", text);  // ดูข้อมูลดิบ
-                                        const cleanText = text.replace(/<[^>]*>/g, ''); // ลบ HTML tags (ถ้ามี)
+                                        console.log("Raw response:", text);  // แสดงข้อมูลดิบที่ได้รับมา
                                         try {
-                                            const data = JSON.parse(cleanText);  // แปลงข้อมูลดิบเป็น JSON
+                                            const data = JSON.parse(text);  // แปลงข้อมูลดิบเป็น JSON
                                             displayDetailPart(data);
                                         } catch (error) {
                                             console.error("Error parsing JSON:", error);  // แสดงข้อผิดพลาดหากเกิดการแปลงผิดพลาด
@@ -153,7 +152,6 @@
                                     })
                                     .catch(error => console.error("Error fetching Detail Part:", error));
                             }
-                            
                             function displayDetailPart(data) {
                                 let listbox = document.getElementById("detailPart");
                                 listbox.innerHTML = `<option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>`;
