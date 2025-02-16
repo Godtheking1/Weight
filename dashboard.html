@@ -140,9 +140,9 @@
                               <script>
                                 function fetchDetailPart() {
                                 fetch("https://script.google.com/macros/s/AKfycbwco74HEGfpB_3XpUpxSywc6_c4RPUH1bXxmptEh8m1ZvOWV6-TTZEjK89pLpU_QXs/exec")
-                                    .then(response => response.text())  // ใช้ .text() แทน .json() เพื่อดูข้อมูลดิบ
+                                    .then(response => response.text())  // ดึงข้อมูลเป็น text
                                     .then(text => {
-                                        console.log(text); // ดูข้อมูลดิบที่ได้รับมา
+                                        console.log("Raw response:", text);  // แสดงข้อมูลดิบที่ได้รับมา
                                         try {
                                             const data = JSON.parse(text);  // แปลงข้อมูลดิบเป็น JSON
                                             displayDetailPart(data);
