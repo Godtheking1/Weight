@@ -140,5 +140,5 @@ let isLocked = true; // สถานะล็อคเริ่มต้น
 
 window.onload = function() {
     fetchData();
-    restrictToAdmin();
+    // restrictToAdmin();
 };
