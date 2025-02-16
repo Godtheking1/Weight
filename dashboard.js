@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const listbox = document.getElementById("listbox");
+    const listbox = document.getElementById("detailPart");
     const editBtn = document.getElementById("edit-btn");
     const deleteBtn = document.getElementById("delete-btn");
 
