@@ -137,8 +137,3 @@ let isLocked = true; // สถานะล็อคเริ่มต้น
 
             isLocked = !isLocked; // สลับสถานะล็อค
         });
-
-window.onload = function() {
-    fetchdata();  // ฟังก์ชันสำหรับดึงข้อมูลจาก API หรือแหล่งข้อมูลหนึ่ง
-    fetchDetailReport();  // ฟังก์ชันสำหรับดึงข้อมูลจาก API หรือแหล่งข้อมูลอีกหนึ่ง
-};
