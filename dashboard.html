@@ -134,39 +134,132 @@
                         <!-- ส่วนที่ 1: Detail Part -->
                           <div class="table-container">
                             <h3 class="section-header">Detail Part</h3>
-                            <select id="detailPart" class="listbox" size="9">
-                                <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>
+                            <select id="detailPart" class="listbox" size="9" onchange="populateForm()">
+                                <option value="" disabled selected>No. | D/C Part No. | Full Part Name | Model | Control | Total</option>
                             </select>
-                              <script>
-                                  // ฟังก์ชันสำหรับดึงข้อมูล Part
-                                  async function fetchDetailPart() {
-                                    const url = "https://script.google.com/macros/s/AKfycbx8k1kPSoU4ZUwgWZO2al08cc-JLbUxrr4LNYo3bAZDRq5AFDoxe5LRIaBnRwzBSnGA/exec";
-                                    
-                                    try {
-                                      let response = await fetch(url); // ใช้ await เพื่อรอการดึงข้อมูล
-                                      let data = await response.json(); // แปลงข้อมูลที่ได้รับเป็น JSON
+                            
+                            <!-- Form สำหรับแก้ไข -->
+                            <div id="editForm">
+                                <input type="text" id="editNo" placeholder="No." disabled>
+                                <input type="text" id="editDC" placeholder="D/C Part No.">
+                                <input type="text" id="editName" placeholder="Full Part Name">
+                                <input type="text" id="editModel" placeholder="Model">
+                                <input type="text" id="editControl" placeholder="Control">
+                                <input type="text" id="editTotal" placeholder="Total">
+                            </div>
+                            
+                            <div id="actions">
+                                <button id="edit-btn" onclick="editFunction()">Edit</button>
+                                <button id="delete-btn" onclick="deleteFunction()">Delete</button>
+                            </div>
+                            
+                            <script>
+                            const apiUrl = "https://script.google.com/macros/s/AKfycbx8k1kPSoU4ZUwgWZO2al08cc-JLbUxrr4LNYo3bAZDRq5AFDoxe5LRIaBnRwzBSnGA/exec";
+                            let selectedData = null;
+                            
+                            // ดึงข้อมูลจาก API
+                            async function fetchDetailPart() {
+                                try {
+                                    let response = await fetch(apiUrl);
+                                    let data = await response.json();
+                                    console.log("Data received:", data);
+                                    displayData(data);
+                                } catch (error) {
+                                    console.error("Error fetching data:", error);
+                                }
+                            }
+                            
+                            // แสดงข้อมูลใน Listbox
+                            function displayData(data) {
+                                let listbox = document.getElementById("detailPart");
+                                listbox.innerHTML = `<option value="" disabled selected>No. | D/C Part No. | Full Part Name | Model | Control | Total</option>`;
+                            
+                                data.forEach(row => {
+                                    let option = document.createElement("option");
+                                    option.value = row["No"];
+                                    option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
+                                    listbox.appendChild(option);
+                                });
+                            }
+                            
+                            // เติมข้อมูลลงใน Form
+                            function populateForm() {
+                                let listbox = document.getElementById("detailPart");
+                                let selectedOption = listbox.options[listbox.selectedIndex].textContent.split(" | ");
                                 
-                                      console.log("Data received for Part:", data);
-                                
-                                      displayData(data); // ส่งข้อมูลไปยังฟังก์ชัน displayData เพื่อแสดงผล
-                                    } catch (error) {
-                                      console.error("Error fetching Part data:", error); // จัดการกับข้อผิดพลาด
-                                    }
-                                  }
-                                
-                                  // ฟังก์ชันสำหรับแสดงข้อมูลใน HTML
-                                  function displayData(data) {
-                                    let listbox = document.getElementById("detailPart");
-                                    listbox.innerHTML = ``; 
-                                
-                                    // แสดงข้อมูลใน Listbox
-                                    data.forEach((row, index) => {
-                                      let option = document.createElement("option");
-                                      option.value = index + 1;  // กำหนดค่าให้เป็นหมายเลขของแถว
-                                      option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
-                                      listbox.appendChild(option);
+                                if (selectedOption.length === 6) {
+                                    document.getElementById("editNo").value = selectedOption[0];
+                                    document.getElementById("editDC").value = selectedOption[1];
+                                    document.getElementById("editName").value = selectedOption[2];
+                                    document.getElementById("editModel").value = selectedOption[3];
+                                    document.getElementById("editControl").value = selectedOption[4];
+                                    document.getElementById("editTotal").value = selectedOption[5];
+                            
+                                    selectedData = {
+                                        "No": selectedOption[0],
+                                        "D/C Part No.": selectedOption[1],
+                                        "Full Part Name": selectedOption[2],
+                                        "Model": selectedOption[3],
+                                        "Control": selectedOption[4],
+                                        "Total": selectedOption[5]
+                                    };
+                                }
+                            }
+                            
+                            // ฟังก์ชันแก้ไขข้อมูล
+                            async function editFunction() {
+                                if (!selectedData) {
+                                    alert("Please select a row to edit!");
+                                    return;
+                                }
+                            
+                                let updatedData = {
+                                    "No": document.getElementById("editNo").value,
+                                    "D/C Part No.": document.getElementById("editDC").value,
+                                    "Full Part Name": document.getElementById("editName").value,
+                                    "Model": document.getElementById("editModel").value,
+                                    "Control": document.getElementById("editControl").value,
+                                    "Total": document.getElementById("editTotal").value
+                                };
+                            
+                                try {
+                                    let response = await fetch(apiUrl, {
+                                        method: "PUT",
+                                        body: JSON.stringify(updatedData),
+                                        headers: { "Content-Type": "application/json" }
                                     });
-                                  }
+                            
+                                    let result = await response.json();
+                                    alert(result.message);
+                                    fetchDetailPart();  // โหลดข้อมูลใหม่
+                                } catch (error) {
+                                    console.error("Error updating data:", error);
+                                }
+                            }
+                            
+                            // ฟังก์ชันลบข้อมูล
+                            async function deleteFunction() {
+                                if (!selectedData) {
+                                    alert("Please select a row to delete!");
+                                    return;
+                                }
+                            
+                                if (!confirm("Are you sure you want to delete this item?")) return;
+                            
+                                try {
+                                    let response = await fetch(apiUrl, {
+                                        method: "DELETE",
+                                        body: JSON.stringify({ "No": selectedData["No"] }),
+                                        headers: { "Content-Type": "application/json" }
+                                    });
+                            
+                                    let result = await response.json();
+                                    alert(result.message);
+                                    fetchDetailPart();  // โหลดข้อมูลใหม่
+                                } catch (error) {
+                                    console.error("Error deleting data:", error);
+                                }
+                            }
                                 
                                   // ฟังก์ชันสำหรับดึงข้อมูล Report
                                   async function fetchDetailReport() {
@@ -205,10 +298,6 @@
                                     fetchDetailReport();  // เรียกใช้ฟังก์ชัน fetchDetailReport
                                   };
                                 </script>
-                            <div id="actions">
-                              <button id="edit-btn" onclick="editFunction()">Edit</button>
-                              <button id="delete-btn" onclick="deleteFunction()">Delete</button>
-                            </div>
                           </div>
                         <!-- ส่วนที่ 2: Check Weight -->
                         <div class="check-weight-section">
