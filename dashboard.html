@@ -137,6 +137,10 @@
                             <select id="detailPart" class="listbox" size="9" onchange="populateForm()">
                                 <option value="" disabled selected>No. | D/C Part No. | Full Part Name | Model | Control | Total</option>
                             </select>
+                            <div id="actions">
+                              <button id="edit-btn" onclick="editFunction()">Edit</button>
+                              <button id="delete-btn" onclick="deleteFunction()">Delete</button>
+                            </div>
                             <script>
                                 const apiUrl = "https://script.google.com/macros/s/AKfycbx4jJicSq8XqyjGhdOzUSwF7t7LL1DfATnz4bHxS5ODwCFyQMZN46vBBppmVTg5btPV/exec";
                                 let selectedData = null;
