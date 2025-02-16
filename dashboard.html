@@ -137,6 +137,74 @@
                             <select id="detailPart" class="listbox" size="9">
                                 <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>
                             </select>
+                              <script>
+                                  // ฟังก์ชันสำหรับดึงข้อมูล Part
+                                  async function fetchDetailPart() {
+                                    const url = "https://script.google.com/macros/s/AKfycbx8k1kPSoU4ZUwgWZO2al08cc-JLbUxrr4LNYo3bAZDRq5AFDoxe5LRIaBnRwzBSnGA/exec";
+                                    
+                                    try {
+                                      let response = await fetch(url); // ใช้ await เพื่อรอการดึงข้อมูล
+                                      let data = await response.json(); // แปลงข้อมูลที่ได้รับเป็น JSON
+                                
+                                      console.log("Data received for Part:", data);
+                                
+                                      displayData(data); // ส่งข้อมูลไปยังฟังก์ชัน displayData เพื่อแสดงผล
+                                    } catch (error) {
+                                      console.error("Error fetching Part data:", error); // จัดการกับข้อผิดพลาด
+                                    }
+                                  }
+                                
+                                  // ฟังก์ชันสำหรับแสดงข้อมูลใน HTML
+                                  function displayData(data) {
+                                    let listbox = document.getElementById("detailPart");
+                                    listbox.innerHTML = ``; 
+                                
+                                    // แสดงข้อมูลใน Listbox
+                                    data.forEach((row, index) => {
+                                      let option = document.createElement("option");
+                                      option.value = index + 1;  // กำหนดค่าให้เป็นหมายเลขของแถว
+                                      option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
+                                      listbox.appendChild(option);
+                                    });
+                                  }
+                                
+                                  // ฟังก์ชันสำหรับดึงข้อมูล Report
+                                  async function fetchDetailReport() {
+                                    const url = "https://script.google.com/macros/s/AKfycbxEQpNikDnjOvHEWkocZ4U17e0OU7tTBcRJnjCs2c0Z_G37Ci1Ir6CEOj91ZKpgBuL-/exec";
+                                
+                                    try {
+                                      let response = await fetch(url);
+                                      let data = await response.json();
+                                
+                                      console.log("Data received for Report:", data);
+                                
+                                      let listBox = document.getElementById("Report");
+                                      listBox.innerHTML = ""; // ล้างค่าเก่า
+                                
+                                      if (Array.isArray(data) && data.length > 0) {
+                                        data.forEach(item => {
+                                          let option = document.createElement("option");
+                                          option.value = item["Queue order"];
+                                          option.textContent = `${item["Where Line"]} | ${item["Queue order"]} | ${item["Part no."]} | ${item["Status"]}`;
+                                          listBox.appendChild(option);
+                                        });
+                                      } else {
+                                        console.warn("No data found!");
+                                        let option = document.createElement("option");
+                                        option.textContent = "No data available";
+                                        listBox.appendChild(option);
+                                      }
+                                    } catch (error) {
+                                      console.error("Error fetching Detail Report:", error);
+                                    }
+                                  }
+                                
+                                  // เรียกใช้ฟังก์ชันเมื่อหน้าเว็บโหลดเสร็จ
+                                  window.onload = function() {
+                                    fetchDetailPart();  // เรียกใช้ฟังก์ชัน fetchDetailPart
+                                    fetchDetailReport();  // เรียกใช้ฟังก์ชัน fetchDetailReport
+                                  };
+                                </script>
                             <div id="actions">
                               <button id="edit-btn" onclick="editFunction()">Edit</button>
                               <button id="delete-btn" onclick="deleteFunction()">Delete</button>
