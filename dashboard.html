@@ -139,26 +139,34 @@
                             </select>
                               <script>
                                 function fetchDetailPart() {
-                                    fetch("https://script.google.com/macros/s/AKfycbwco74HEGfpB_3XpUpxSywc6_c4RPUH1bXxmptEh8m1ZvOWV6-TTZEjK89pLpU_QXs/exec")
-                                        .then(response => response.json())
-                                        .then(data => displayDetailPart(data))
-                                        .catch(error => console.error("Error fetching Detail Part:", error));
-                                }
-                    
-                                function displayDetailPart(data) {
-                                    let listbox = document.getElementById("detailPart");
-                                    listbox.innerHTML = `<option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>`;
-                    
-                                    data.forEach((row, index) => {
-                                        let option = document.createElement("option");
-                                        option.value = index + 2; // กำหนดเลขแถว
-                                        option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
-                                        listbox.appendChild(option);
-                                    });
-                                }
-                    
-                                // โหลดข้อมูลเมื่อหน้าเว็บเปิด
-                                fetchDetailPart();
+                                fetch("https://script.google.com/macros/s/AKfycbwco74HEGfpB_3XpUpxSywc6_c4RPUH1bXxmptEh8m1ZvOWV6-TTZEjK89pLpU_QXs/exec")
+                                    .then(response => response.text())  // ใช้ .text() แทน .json() เพื่อดูข้อมูลดิบ
+                                    .then(text => {
+                                        console.log(text); // ดูข้อมูลดิบที่ได้รับมา
+                                        try {
+                                            const data = JSON.parse(text);  // แปลงข้อมูลดิบเป็น JSON
+                                            displayDetailPart(data);
+                                        } catch (error) {
+                                            console.error("Error parsing JSON:", error);  // แสดงข้อผิดพลาดหากเกิดการแปลงผิดพลาด
+                                        }
+                                    })
+                                    .catch(error => console.error("Error fetching Detail Part:", error));
+                            }
+                            
+                            function displayDetailPart(data) {
+                                let listbox = document.getElementById("detailPart");
+                                listbox.innerHTML = `<option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>`;
+                            
+                                data.forEach((row, index) => {
+                                    let option = document.createElement("option");
+                                    option.value = index + 2; // กำหนดเลขแถว
+                                    option.textContent = `${row["No"]} | ${row["D/C Part No."]} | ${row["Full Part Name"]} | ${row["Model"]} | ${row["Control"]} | ${row["Total"]}`;
+                                    listbox.appendChild(option);
+                                });
+                            }
+                            
+                            // โหลดข้อมูลเมื่อหน้าเว็บเปิด
+                            fetchDetailPart();
                             </script>
 
                             <div id="actions">
