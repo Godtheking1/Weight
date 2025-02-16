@@ -134,8 +134,9 @@
                         <!-- ส่วนที่ 1: Detail Part -->
                           <div class="table-container">
                             <h3 class="section-header">Detail Part</h3>
-                            <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total </option>
-                            <select id="detailPart" class="listbox" size="9"></select>
+                            <select id="detailPart" class="listbox" size="9">
+                                <option value="" disabled selected>No.  | D/C Part No. | Full Part Name. | Model | Control | Total</option>
+                            </select>
                               <script>
                                   function fetchData() {
                                     fetch("https://script.google.com/macros/s/AKfycbz0X8tkXrsCeMr5uhFqKvwHMbNif5A6YQVNzTvqHP5xo5tSF-xqgFtQqKzg8elU4NlE/exec") // ใส่ URL ที่ได้จาก Deploy
