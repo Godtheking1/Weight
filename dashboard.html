@@ -130,8 +130,6 @@
                             <input type="text" id="Part-action8" placeholder="Enter Percent" readonly>
                         </div>
                     </div>
-                    <div class="main-container">
-                        <!-- ส่วนที่ 1: Detail Part -->
                           <script>
                             function fetchData() {
                               google.script.run.withSuccessHandler(displayData).getData();
@@ -185,7 +183,8 @@
                           </script>
                         </head>
                         <body onload="fetchData()">
-                        
+                        <div class="main-container">
+                        <!-- ส่วนที่ 1: Detail Part -->
                           <div class="table-container">
                             <h3 class="section-header">Detail Part</h3>
                             <select class="listbox" size="9" id="listbox">
@@ -196,7 +195,7 @@
                               <button id="delete-btn" onclick="deleteFunction()">Delete</button>
                             </div>
                           </div>
-                        
+                        </div>
                         </body>
                                 
                             <div id="actions">
