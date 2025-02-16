@@ -16,12 +16,16 @@
                 document.getElementById('current-date-time').textContent = `${formattedDate} | ${formattedTime}`;
             }
             // เรียกฟังก์ชันอัปเดตทุกวินาที
+            document.addEventListener("DOMContentLoaded", function() {
             setInterval(updateDateTime, 1000);
-                // Event listener for Add User button
-                document.getElementById("addUserBtn").addEventListener("click", function() {
-                // Redirect to Add User page
-                window.location.href = 'add_user_page.html'; // Replace with your actual page path
-            });
+        
+            let addUserBtn = document.getElementById("addUserBtn");
+            if (addUserBtn) {
+                addUserBtn.addEventListener("click", function() {
+                    window.location.href = 'add_user_page.html'; // Replace with actual page path
+                });
+            }
+        });
         </script>
     </head>
     <body>
